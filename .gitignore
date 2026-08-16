@@ -1,5 +1,6 @@
 # Secretos y credenciales (¡nunca subirlos a Git!)
 .env
+.env.local
 *.pem
 *.key
 

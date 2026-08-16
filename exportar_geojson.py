@@ -22,7 +22,7 @@ def obtener_sensores_geojson():
                 SELECT 
                     id, 
                     nombre, 
-                    bateria_pct, 
+                    bateria_ptc, 
                     activa,
                     ST_AsGeoJSON(geom) AS geometria_geojson
                 FROM estaciones_sensores;
@@ -39,7 +39,7 @@ def obtener_sensores_geojson():
                     "properties": {
                         "id": id_sensor,
                         "nombre": nombre,
-                        "bateria_pct": bateria,
+                        "bateria_ptc": bateria,
                         "activa": activa
                     }
                 }

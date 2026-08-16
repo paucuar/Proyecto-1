@@ -83,7 +83,7 @@ ST_SetSRID(
 )
 );
 
-CREATE INDEX IF NOT EXISTS idx_xonas_geom ON zonas_interes USING GIST(geom);
+CREATE INDEX IF NOT EXISTS idx_zonas_geom ON zonas_interes USING GIST(geom);
 
 SELECT
     e.nombre AS sensor,

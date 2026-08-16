@@ -1,0 +1,69 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.3762,
+                    39.4791
+                ]
+            },
+            "properties": {
+                "id": 1,
+                "nombre": "Sensor Norte - València",
+                "bateria_ptc": 85,
+                "activa": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.3325,
+                    39.4602
+                ]
+            },
+            "properties": {
+                "id": 2,
+                "nombre": "Sensor Puerto",
+                "bateria_ptc": 15,
+                "activa": true
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.3333,
+                    39.3333
+                ]
+            },
+            "properties": {
+                "id": 3,
+                "nombre": "Sensor Albufera",
+                "bateria_ptc": 42,
+                "activa": false
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -0.456,
+                    39.702
+                ]
+            },
+            "properties": {
+                "id": 4,
+                "nombre": "Sensor Sierra Calderona",
+                "bateria_ptc": 95,
+                "activa": true
+            }
+        }
+    ]
+}

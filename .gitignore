@@ -1,0 +1,11 @@
+# Secretos y credenciales (¡nunca subirlos a Git!)
+.env
+*.pem
+*.key
+
+# Archivos pesados o temporales
+*.log
+__pycache__/
+
+__pycache__/
+*.pyc

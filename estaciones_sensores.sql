@@ -48,3 +48,48 @@ INSERT INTO estaciones_sensores (nombre, latitud, longitud, bateria_ptc, activa)
 ('Sensor Sierra Calderona', 39.702000, -0.456000, 95, TRUE);
 UPDATE estaciones_sensores 
 SET geom = ST_SetSRID(ST_MakePoint(longitud, latitud), 4326);
+
+-- CONSULTAS ESPACIALES AVANZADAS
+SELECT
+    nombre,
+    bateria_ptc,
+    ROUND(
+        ST_Distance(
+            geom::geography,
+            ST_SetSRID(ST_MakePoint(-0.376300, 39.469900), 4326)::geography
+        )::numeric, 0
+    ) AS distancia_m
+FROM estaciones_sensores
+WHERE ST_DWithin(
+    geom::geography,
+    ST_SetSRID(ST_MakePoint(-0.376300, 39.469900), 4326)::geography,
+    20000
+)
+ORDER BY distancia_m ASC;
+
+-- TABLA DE POLÍGONOS
+ CREATE TABLE IF NOT EXISTS zonas_interes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    nivel_proteccion VARCHAR(50) DEFAULT 'Medio',
+    geom GEOMETRY(Polygon, 4326)
+);
+
+INSERT INTO zonas_interes (nombre, nivel_proteccion, geom) VALUES
+('Parque Natural de la Albufera', 'Alto',
+ST_SetSRID(
+    ST_GeomFromText('POLYGON((-0.3800 39.3800, -0.3000 39.3800, -0.3000 39.3000, -0.3800 39.3000, -0.3800 39.3800))'),
+    4326
+)
+);
+
+CREATE INDEX IF NOT EXISTS idx_xonas_geom ON zonas_interes USING GIST(geom);
+
+SELECT
+    e.nombre AS sensor,
+    e.bateria_ptc,
+    z.nombre AS zona_protegida,
+    z.nivel_proteccion
+FROM estaciones_sensores e
+JOIN zonas_interes z
+  ON ST_Contains(z.geom, e.geom);

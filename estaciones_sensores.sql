@@ -15,3 +15,36 @@ INSERT INTO estaciones_sensores (nombre, latitud, longitud, bateria_ptc, activa)
 ('Sensor Puerto', 39.460200, -0.332500, 15, TRUE),
 ('Sensor Albufera', 39.333300, -0.333300, 42, FALSE),
 ('Sensor Sierra Calderona', 39.702000, -0.456000, 95, TRUE);
+
+ALTER TABLE estaciones_sensores
+ADD COLUMN IF NOT EXISTS geom GEOMETRY(Point, 4326);
+
+UPDATE estaciones_sensores
+SET geom = ST_SetSRID(ST_MakePoint(longitud, latitud), 4326);
+
+CREATE INDEX IF NOT EXISTS idx_estaciones_geom
+ON estaciones_sensores USING GIST (geom);
+
+SELECT nombre, ST_AsText(geom) AS geometria_texto
+FROM estaciones_sensores;
+
+SELECT
+    nombre,
+    bateria_ptc,
+    ROUND(
+        ST_Distance(
+            geom::geography,
+            ST_SetSRID(ST_MakePoint(-0.376300, 39.469900), 4326)::geography
+        )::numeric, 2
+    ) AS distancia_metros
+FROM estaciones_sensores
+ORDER BY distancia_metros ASC;
+
+TRUNCATE TABLE estaciones_sensores RESTART IDENTITY;
+INSERT INTO estaciones_sensores (nombre, latitud, longitud, bateria_ptc, activa) VALUES
+('Sensor Norte - València', 39.479100, -0.376200, 85, TRUE),
+('Sensor Puerto', 39.460200, -0.332500, 15, TRUE),
+('Sensor Albufera', 39.333300, -0.333300, 42, FALSE),
+('Sensor Sierra Calderona', 39.702000, -0.456000, 95, TRUE);
+UPDATE estaciones_sensores 
+SET geom = ST_SetSRID(ST_MakePoint(longitud, latitud), 4326);

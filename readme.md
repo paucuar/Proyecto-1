@@ -2,7 +2,7 @@
 
 # Microservice developed in Python with **FastAPI** and a Spatial Database **PostgreSQL + PostGIS**. Packaged and Orchestrated by **Docker & Docker Compose**. Designed for ingest, spatial analytics querying, and IoT telemetry serialization in GeoJSON standard.
 
-##System Architechture
+## System Architechture
 
 ```text
 [Client/Frontend]
